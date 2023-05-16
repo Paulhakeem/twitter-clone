@@ -5,6 +5,7 @@ import App from './App.vue'
 import Home from './views/Home.vue'
 
 
+
 // fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -23,7 +24,7 @@ const router = createRouter({
          iconClass: ['fas', 'home'],
          mainMenu: true
         },
-      
+       
          {path: '/explore', 
           name: 'Explore', 
           component: Home,
@@ -42,6 +43,18 @@ const router = createRouter({
          component: Home,
          mainMenu: true,
          iconClass: ['fas', 'envelope']
+         },
+        {path: '/list', 
+         name: 'List', 
+         component: Home,
+         mainMenu: true,
+         iconClass: ['fas', 'list']
+         },
+        {path: '/bookmark', 
+         name: 'Bookmark', 
+         component: Home,
+         mainMenu: true,
+         iconClass: ['fas', 'bookmark']
          },
       {
         path: '/profile',

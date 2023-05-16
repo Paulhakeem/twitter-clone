@@ -5,6 +5,7 @@
 </script>
 
 <template>
+  
   <article class="tweet border-b border-gray-600">
     <RouterLink to="#" class="flex p-4">
       <figure class="w-16 mr-3">
