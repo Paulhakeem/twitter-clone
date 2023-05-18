@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import vweets from '../vweets'
 import Tweet from '../components/Tweet.vue'
-  
 const tweets = ref(vweets)
 </script>
 

@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import './style.css'
 import { createRouter, createWebHistory } from 'vue-router'
 import App from './App.vue'
-import Home from './views/Home.vue'
+import { auth } from './firebaseConfig'
 
 
 
@@ -19,49 +19,71 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {path: '/',
-         name: 'Home', 
-         component: Home,
+         name: 'Home',
          iconClass: ['fas', 'home'],
-         mainMenu: true
+         mainMenu: true,
+         component:  () => 
+        import ('./views/Home.vue'),
+        meta: {requiresAuth: true}
         },
-       
-         {path: '/explore', 
+        {
+          path: '/explore', 
           name: 'Explore', 
-          component: Home,
+          component: () => 
+         import ('./views/Explore.vue'),
           mainMenu: true,
           iconClass: ['fas', 'search']
          },
           
-        {path: '/notifications', 
+        {
+         path: '/notifications', 
          name: 'Notifications', 
-         component: Home,
+         component: () => 
+        import ('./views/Notification.vue'),
          mainMenu: true,
          iconClass: ['fas', 'bell']
         },
-         {path: '/messages', 
+         {
+         path: '/messages', 
          name: 'Messages', 
-         component: Home,
+         component: () => 
+        import ('./views/Messages.vue'),
          mainMenu: true,
          iconClass: ['fas', 'envelope']
          },
-        {path: '/list', 
+        {
+          path: '/list', 
          name: 'List', 
-         component: Home,
+         component: () => 
+        import ('./views/List.vue'),
          mainMenu: true,
          iconClass: ['fas', 'list']
          },
-        {path: '/bookmark', 
+        {
+          path: '/bookmark', 
          name: 'Bookmark', 
-         component: Home,
+         component: () => 
+        import ('./views/Bookmark.vue'),
          mainMenu: true,
          iconClass: ['fas', 'bookmark']
          },
       {
         path: '/profile',
         name: 'Profile',
-        component: 'Home'
+        component: () => 
+        import ('./views/Profile.vue')
+      
       }
     ]
+})
+
+router.beforeEach((to, from, next) =>{
+  const isAuthenticated = auth.currentUser
+  const isAuthRequired = to.matched.some(record => record.meta.requiresAuth)
+
+  if (!isAuthenticated && isAuthRequired) next({ name: 'login'})
+
+  else next()
 })
 
 createApp(App)

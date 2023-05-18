@@ -4,7 +4,7 @@ import {ref, onBeforeMount} from 'vue'
 import {useRouter} from 'vue-router'
 import Dropdown from './components/Dropdown.vue'
 import Search from './components/Search.vue'
-  
+import Login from './components/Login.vue'
   const routes = ref([])
   const router = useRouter()
 
@@ -14,6 +14,9 @@ import Search from './components/Search.vue'
 </script>
 
 <template>
+  <div>
+  <Login/>
+  </div>
   <div class="flex flex-col min-h-screen">
     
   <header class="flex items-center bg-gray-700">
