@@ -5,7 +5,7 @@
 
 <template>
   
-  <article class="tweet border-b border-green">
+  <article class="tweet shadow-md w-full">
     <RouterLink to="#" class="flex p-4">
       <figure class="w-16 mr-3">
         <img :src="tweet.author.profile_img_url" alt="image" class="rounded-full w-full"/>

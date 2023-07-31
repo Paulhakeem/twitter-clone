@@ -8,29 +8,24 @@ import Search from '../components/Search.vue';
 const tweets = ref(vtweets)
 
 
-const isMenuOpen = ref(true)
+const showMenu = ref(false)
 
-const openMenu = () => {
-      isMenuOpen.value = !isMenuOpen.value;
-};
 
 </script>
 
 <template>
 
 <button 
-@click="openMenu"
-data-drawer-target="default-sidebar" 
-data-drawer-toggle="default-sidebar" aria-controls="default-sidebar"
+@click="showMenu = !showMenu"
  type="button" class="inline-flex items-center p-2 mt-2 ml-6 text-sm
   text-gray-500 rounded-lg sm:hidden hover:animate-bounce">
    <font-awesome-icon 
    class="text-green text-center text-xl mr-3"
    :icon="['fas', 'bars']" />
 </button>
-
-<aside v-if="isMenuOpen" id="default-sidebar" class="fixed top-0 left-0 z-[-1] w-64 h-screen
+<aside class="fixed top-0 left-0 z-[-1] w-64 h-screen
  transition-transform -translate-x-full sm:translate-x-0 bg-green" aria-label="Sidebar">
+
    <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
       <ul class="space-y-2 font-medium">
 
@@ -110,11 +105,12 @@ data-drawer-toggle="default-sidebar" aria-controls="default-sidebar"
    </div>
 </aside>
 
+
 <div class="p-4 sm:ml-64">
-   <div class="p-4 border-2 border-green border-dashed rounded-lg">
-   <div class="flex justify-between ml-4 mr-4 mb-4">
-      <button class="font-semibold text-xl border-b-4 rounded-sm border-b-green">For you</button>
-      <button class="font-semibold text-xl">Following</button>
+   <div class="p-4">
+   <div class="flex flex-wrap gap-4 justify-between ml-4 mr-4 mb-4">
+      <button class="font-semibold text-xl border-b-4 rounded-sm border-b-green mb-4">For you</button>
+      <button class="font-semibold text-xl mb-4">Following</button>
       <div class="relative">
          <div class="absolute top-1 left-3">
             <font-awesome-icon 
