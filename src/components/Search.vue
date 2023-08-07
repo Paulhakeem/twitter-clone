@@ -92,7 +92,7 @@ onAuthStateChanged(auth, (user) => {
            </div>
 
             <div>
-              <p class="text-green text-lg font-semibold">{{ name }}
+              <p class="text-green text-md font-semibold">{{ name }}
                  <span class="text-sm font-light text-gray">@{{ name }}</span>
                 </p>
             <p>
