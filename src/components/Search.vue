@@ -1,7 +1,9 @@
 <script setup>
-import { ref } from "vue"
+import { ref, onMounted } from "vue"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useTweetStore } from "../store/tweetStore";
+import db from "../firebase"
+import {query, collection, addDoc, getDocs } from "firebase/firestore"
 
 const tweetStore = useTweetStore()
 
@@ -9,9 +11,18 @@ const tweetStore = useTweetStore()
 const photoURL = ref(null)
 const name = ref(null)
 const newTweet = ref('')
+const tweets = ref([])
 
 
-const handleTweets = () => {
+const handleTweets = async () => {
+  const colRef = collection(db, 'tweets')
+  const dataObj = {
+    name: name.value,
+    text: newTweet.value
+  }
+  const docRef = await addDoc(colRef, dataObj)
+
+
   if(newTweet.value.length > 0) {
     tweetStore.addTweet({
       text: newTweet.value,
@@ -21,6 +32,18 @@ const handleTweets = () => {
   }
 }
 
+onMounted(() => {
+const querySnapshot = getDocs(collection(db, "tweets"))
+ .then((querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+  let tweet = {
+    id: doc.id,
+    text: doc.data().text
+  }
+  tweets.value.push(tweet)
+ })
+})
+})
 
 const auth = getAuth()
 onAuthStateChanged(auth, (user) => {
@@ -33,9 +56,9 @@ onAuthStateChanged(auth, (user) => {
       }
     });
 
- 
 
 
+   
 </script>
 
 
