@@ -8,7 +8,11 @@
   <article class="tweet shadow-md w-full">
     <RouterLink to="#" class="flex p-4">
       <figure class="w-16 mr-3">
-        <img :src="tweet.author.profile_img_url" alt="image" class="rounded-full w-12 h-12"/>
+        <img
+          :src="tweet.author.profile_img_url"
+          alt="image"
+          class="rounded-full w-12 h-12"
+        />
       </figure>
 
       <section class="tweet-body flex-1">
@@ -40,7 +44,7 @@
         <div class="text-gray-400 flex">
          <font-awesome-icon 
            :icon="['fas', 'comment']"  
-           class="p-2 mr-1 rounded-full text-green hover:animate-bounce"/>
+           class="p-2 mr-1 rounded-full text-green"/>
           <span class="pt-1">
             {{ tweet.stats.comments.length}}
           </span>
@@ -49,7 +53,7 @@
         <div class="text-gray-400 flex">
          <font-awesome-icon 
            :icon="['fas', 'retweet']"  
-           class="p-2 mr-1 rounded-full text-green hover:animate-bounce"/>
+           class="p-2 mr-1 rounded-full text-green"/>
           <span class="pt-1">
             {{ tweet.stats.retweets.length}}
           </span>
@@ -59,7 +63,7 @@
         <div class="text-gray-400 flex">
          <font-awesome-icon 
            :icon="['fas', 'heart']"  
-           class="p-2 mr-1 rounded-full text-green hover:animate-bounce"/>
+           class="p-2 mr-1 rounded-full text-green"/>
           <span class="pt-1">
             {{ tweet.stats.likes.length}}
           </span>
@@ -67,7 +71,7 @@
 
         <div class="text-gray-400 flex">
           <font-awesome-icon 
-          class="p-2 mr-1 rounded-full text-green hover:animate-bounce"
+          class="p-2 mr-1 rounded-full text-green"
           :icon="['fas', 'chart-simple']" />
         </div>
 
@@ -75,7 +79,7 @@
         <div class="text-gray-400 flex">
          <font-awesome-icon 
            :icon="['fas', 'share']"  
-           class="p-2 mr-1 rounded-full text-green hover:animate-bounce"/>
+           class="p-2 mr-1 rounded-full text-green"/>
         </div>
       </div>
      </section>

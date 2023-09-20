@@ -1,24 +1,33 @@
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, computed, onMounted } from "vue"
+import { useRoute } from 'vue-router'
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useTweetStore } from "../store/tweetStore";
 import db from "../firebase"
-import {query, collection, addDoc, getDocs } from "firebase/firestore"
+import {query, collection, addDoc,
+   getDocs, onSnapshot, doc
+  } from "firebase/firestore"
+
+
+
 
 const tweetStore = useTweetStore()
-
+const route = useRoute()
 
 const photoURL = ref(null)
 const name = ref(null)
 const newTweet = ref('')
 const tweets = ref([])
-
+const reversedTweets = computed(() => {
+  return [...tweets.value].reverse()
+})
 
 const handleTweets = async () => {
   const colRef = collection(db, 'tweets')
   const dataObj = {
     name: name.value,
-    text: newTweet.value
+    text: newTweet.value,
+    date: Date.now()
   }
   const docRef = await addDoc(colRef, dataObj)
 
@@ -33,17 +42,22 @@ const handleTweets = async () => {
 }
 
 onMounted(() => {
-const querySnapshot = getDocs(collection(db, "tweets"))
- .then((querySnapshot) => {
+ onSnapshot(collection(db, "tweets"), (querySnapshot) => {
+  const dbTweets = []
   querySnapshot.forEach((doc) => {
-  let tweet = {
-    id: doc.id,
-    text: doc.data().text
-  }
-  tweets.value.push(tweet)
- })
+    const tweet = {
+      id: doc.id,
+      name: doc.data().name,
+      text: doc.data().text,
+      photoURL: doc.data().photoURL
+    }
+    dbTweets.value.push(tweet)
 })
+tweets.value = dbTweets
+});
 })
+
+
 
 const auth = getAuth()
 onAuthStateChanged(auth, (user) => {
