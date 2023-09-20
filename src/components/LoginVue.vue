@@ -52,7 +52,7 @@ const facebookLogin = () => {
 </script>
 <template>
   <main
-    class="flex flex-col items-center justify-center px-6 py-8 mx-auto max-w-md rounded-md space-y-4 mt-10 mb-10 shadow-md bg-green bg-opacity-10"
+    class="login flex flex-col items-center justify-center px-6 py-8 mx-auto max-w-md rounded-md space-y-4 mt-10 mb-10 shadow-md bg-green bg-opacity-10"
   >
     <div class="">
       <svg
