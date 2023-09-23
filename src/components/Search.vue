@@ -51,7 +51,7 @@ onMounted(() => {
       text: doc.data().text,
       photoURL: doc.data().photoURL
     }
-    dbTweets.value.push(tweet)
+    dbTweets.push(tweet)
 })
 tweets.value = dbTweets
 });
