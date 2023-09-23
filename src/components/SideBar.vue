@@ -1,11 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router';
-import vtweets from '../vtweets'
-import MeTweet from '../components/MeTweet.vue'
 import Search from '../components/Search.vue';
 
-const tweets = ref(vtweets)
 
 
 const showMenu = ref(false)
@@ -129,10 +126,6 @@ const showMenu = ref(false)
       
    </div>
     <Search/>
-    <MeTweet 
-     v-for="tweet in tweets" 
-     :key="tweet._id" 
-     :tweet="tweet"/>
       </div>
 </div>
 

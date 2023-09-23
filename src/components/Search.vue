@@ -2,16 +2,16 @@
 import { ref, computed, onMounted } from "vue"
 import { useRoute } from 'vue-router'
 import { getAuth, onAuthStateChanged } from "firebase/auth"
-import { useTweetStore } from "../store/tweetStore";
+// import { useTweetStore } from "../store/tweetStore";
 import db from "../firebase"
-import {query, collection, addDoc,
-   getDocs, onSnapshot, doc
+import { collection, addDoc, onSnapshot, query, orderBy
   } from "firebase/firestore"
 
 
 
+  const twitterQuery = query(collection(db, "tweets"), orderBy('date', "desc"));
 
-const tweetStore = useTweetStore()
+// const tweetStore = useTweetStore()
 const route = useRoute()
 
 const photoURL = ref(null)
@@ -23,37 +23,33 @@ const reversedTweets = computed(() => {
 })
 
 const handleTweets = async () => {
-  const colRef = collection(db, 'tweets')
-  const dataObj = {
-    name: name.value,
-    text: newTweet.value,
-    date: Date.now()
-  }
-  const docRef = await addDoc(colRef, dataObj)
-
-
-  if(newTweet.value.length > 0) {
-    tweetStore.addTweet({
-      text: newTweet.value,
-      id: Math.floor(Math.random() * 10000)
-    })
-    newTweet.value = ''
-  }
+  addDoc(twitterQuery, {
+  name: name.value,
+  text: newTweet.value,
+  date: Date.now()
+})
+newTweet.value = ''
+  // if(newTweet.value.length > 0) {
+  //   tweetStore.addTweet({
+  //     text: newTweet.value,
+  //     id: Math.floor(Math.random() * 10000)
+  //   })
+  //   newTweet.value = ''
+  // }
 }
 
 onMounted(() => {
- onSnapshot(collection(db, "tweets"), (querySnapshot) => {
+ onSnapshot(twitterQuery, (querySnapshot) => {
   const dbTweets = []
   querySnapshot.forEach((doc) => {
     const tweet = {
       id: doc.id,
       name: doc.data().name,
       text: doc.data().text,
-      photoURL: doc.data().photoURL
     }
     dbTweets.push(tweet)
 })
-tweets.value = dbTweets
+   tweets.value = dbTweets
 });
 })
 
@@ -121,8 +117,8 @@ onAuthStateChanged(auth, (user) => {
 
    <ul class="ml-2 pt-4 space-y-10">
         <li class="shadow-lg"
-          v-for="tweet in tweetStore.tweets" :key="id">
-           <div class="flex gap-6 ml-2">
+          v-for="tweet in tweets">
+           <div class="flex gap-10 ml-2">
             <div>
             <img :src="photoURL"
             class="flex-none w-12 h-12 rounded-full"/>
@@ -146,7 +142,7 @@ onAuthStateChanged(auth, (user) => {
         <div class="text-gray-400 flex">
          <font-awesome-icon 
            :icon="['fas', 'comment']"  
-           class="p-2 mr-1 rounded-full text-green hover:animate-bounce"/>
+           class="p-2 mr-1 rounded-full text-green"/>
           <span class="pt-1">
           </span>
         </div>
@@ -154,7 +150,7 @@ onAuthStateChanged(auth, (user) => {
         <div class="text-gray-400 flex">
          <font-awesome-icon 
            :icon="['fas', 'retweet']"  
-           class="p-2 mr-1 rounded-full text-green hover:animate-bounce"/>
+           class="p-2 mr-1 rounded-full text-green "/>
           <span class="pt-1">
           </span>
         </div>
@@ -163,14 +159,14 @@ onAuthStateChanged(auth, (user) => {
         <div class="text-gray-400 flex">
          <font-awesome-icon 
            :icon="['fas', 'heart']"  
-           class="p-2 mr-1 rounded-full text-green hover:animate-bounce"/>
+           class="p-2 mr-1 rounded-full text-green "/>
           <span class="pt-1">
           </span>
         </div>
 
         <div class="text-gray-400 flex">
           <font-awesome-icon 
-          class="p-2 mr-1 rounded-full text-green hover:animate-bounce"
+          class="p-2 mr-1 rounded-full text-green "
           :icon="['fas', 'chart-simple']" />
         </div>
 
@@ -178,7 +174,7 @@ onAuthStateChanged(auth, (user) => {
         <div class="text-gray-400 flex">
          <font-awesome-icon 
            :icon="['fas', 'share']"  
-           class="p-2 mr-1 rounded-full text-green hover:animate-bounce"/>
+           class="p-2 mr-1 rounded-full text-green"/>
         </div>
       </div>
         </li>
