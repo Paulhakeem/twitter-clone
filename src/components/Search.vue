@@ -19,12 +19,10 @@ const photoURL = ref(null)
 const name = ref(null)
 const newTweet = ref('')
 const tweets = ref([])
-const reversedTweets = computed(() => {
-  return [...tweets.value].reverse()
-})
+
 
 const handleTweets = async () => {
-  addDoc(twitterQuery, {
+  addDoc(collection(db, "tweets"), {
   name: name.value,
   text: newTweet.value,
   date: Date.now()
