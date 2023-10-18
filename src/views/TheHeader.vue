@@ -12,7 +12,7 @@ import Sidebar from '../components/SideBar.vue'
 
 
     <footer class="grid grid-cols-2 bg-green
-     items-center text-center border-t border-white">
+     items-center text-center border-t border-white sticky bottom-0">
      <div class="flex ml-4 gap-2 mr-6">
         <RouterLink to="/" class="p-3 flex gap-4">
             <button class="text-green bg-white p-2 w-28 rounded-full">

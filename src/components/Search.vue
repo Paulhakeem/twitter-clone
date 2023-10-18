@@ -2,16 +2,15 @@
 import { ref, computed, onMounted } from "vue"
 import { useRoute } from 'vue-router'
 import { getAuth, onAuthStateChanged } from "firebase/auth"
-// import { useTweetStore } from "../store/tweetStore";
+import { useImageStore } from "../store/imageStore";
 import db from "../firebase"
 import { collection, addDoc, onSnapshot, query, orderBy
   } from "firebase/firestore"
 
 
+const twitterQuery = query(collection(db, "tweets"), orderBy('date', "desc"));
 
-  const twitterQuery = query(collection(db, "tweets"), orderBy('date', "desc"));
-
-// const tweetStore = useTweetStore()
+const imageStore = useImageStore()
 const route = useRoute()
 
 
@@ -87,7 +86,8 @@ onAuthStateChanged(auth, (user) => {
          <div class="absolute top-2 right-2">
           <button
            class="h-10 w-20 text-white rounded-lg 
-          bg-green">Tweet</button> </div>
+          bg-green">Tweet</button>
+         </div>
       </div>
       
          <button class="mb-10 flex gap-2 border-2 border-green p-1 rounded-full">
@@ -98,7 +98,8 @@ onAuthStateChanged(auth, (user) => {
          
       <div class="flex items-center space-x-8">
       <font-awesome-icon 
-       :icon="['fas', 'image']" class="text-green"/>
+       :icon="['fas', 'image']"
+       class="text-green cursor-pointer"/>
       <font-awesome-icon 
        :icon="['fas', 'film']" class="text-green"/>
         <font-awesome-icon 
@@ -128,7 +129,7 @@ onAuthStateChanged(auth, (user) => {
                  <span class="text-sm font-light text-gray">@{{ name }}</span>
                 </p>
             <p>
-              {{ tweet.text }}
+              {{ tweet.text }}.
             </p>
             </div>
            </div>
